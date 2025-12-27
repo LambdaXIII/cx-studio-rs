@@ -1,0 +1,12 @@
+[package]
+name = "cx_studio_core"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "cx_studio_core"
+# path = "src"
+create-type = ["rlib", "dylib"]
+
+[dependencies]
+regex = "1.12.2"

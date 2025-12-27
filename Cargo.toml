@@ -1,0 +1,3 @@
+[workspace]
+members = ["cx_studio_core"]
+resolver = "3"
