@@ -9,3 +9,9 @@ pub use cx_timebase::Timebase;
 
 mod cx_timecode;
 pub use cx_timecode::Timecode;
+
+mod cx_timerange;
+pub use cx_timerange::TimeRange;
+
+mod cx_trait_timerangesupport;
+pub use cx_trait_timerangesupport::*;

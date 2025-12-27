@@ -32,12 +32,19 @@ impl Timestamp {
     }
 
     pub fn from_time(time: Time) -> Self {
-        let ms = time.to_milliseconds();
+        let ms = time.normalized().to_milliseconds();
+        let mmm = ms % 1000;
+        let seconds = ms / 1000;
+        let ss = seconds % 60;
+        let minutes = seconds / 60;
+        let mm = minutes % 60;
+        let hours = minutes / 60;
+        let hh = hours % 24;
         Self {
-            hour_code: (ms / 1000 / 60 / 60) as u8,
-            minute_code: (ms / 1000 / 60 % 60) as u8,
-            second_code: (ms / 1000 % 60) as u8,
-            millisecond_code: (ms % 1000) as u16,
+            hour_code: hh as u8,
+            minute_code: mm as u8,
+            second_code: ss as u8,
+            millisecond_code: mmm as u16,
         }
     }
 
@@ -48,6 +55,22 @@ impl Timestamp {
                 + (self.second_code as i64 * 1000)
                 + (self.millisecond_code as i64),
         )
+    }
+
+    const PATTERN: &'static str = r"^(\d{2})[^\d](\d{2})[^\d](\d{2})[^\d](\d{3})$";
+    pub fn from_string(s: &str) -> Option<Self> {
+        let re = Regex::new(Self::PATTERN).ok()?;
+        let caps = re.captures(s)?;
+        let hour_code = caps.get(1)?.as_str().parse().ok()?;
+        let minute_code = caps.get(2)?.as_str().parse().ok()?;
+        let second_code = caps.get(3)?.as_str().parse().ok()?;
+        let millisecond_code = caps.get(4)?.as_str().parse().ok()?;
+        Some(Self::new(
+            hour_code,
+            minute_code,
+            second_code,
+            millisecond_code,
+        ))
     }
 }
 
@@ -60,60 +83,6 @@ impl From<Time> for Timestamp {
 impl Into<Time> for Timestamp {
     fn into(self) -> Time {
         self.to_time()
-    }
-}
-
-impl FromStr for Timestamp {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let re = Regex::new(r"^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$").map_err(|e| e.to_string())?;
-
-        let caps = re
-            .captures(s)
-            .ok_or("Invalid timestamp format. Expected: HH:MM:SS.mmm")?;
-
-        let hour: u8 = caps
-            .get(1)
-            .ok_or("Missing hour")?
-            .as_str()
-            .parse()
-            .map_err(|_| "Invalid hour")?;
-        let minute: u8 = caps
-            .get(2)
-            .ok_or("Missing minute")?
-            .as_str()
-            .parse()
-            .map_err(|_| "Invalid minute")?;
-        let second: u8 = caps
-            .get(3)
-            .ok_or("Missing second")?
-            .as_str()
-            .parse()
-            .map_err(|_| "Invalid second")?;
-        let millisecond: u16 = caps
-            .get(4)
-            .ok_or("Missing millisecond")?
-            .as_str()
-            .parse()
-            .map_err(|_| "Invalid millisecond")?;
-
-        if hour > 23 {
-            return Err("Hour must be 0-23".to_string());
-        }
-        if minute > 59 {
-            return Err("Minute must be 0-59".to_string());
-        }
-        if second > 59 {
-            return Err("Second must be 0-59".to_string());
-        }
-
-        Ok(Self {
-            hour_code: hour,
-            minute_code: minute,
-            second_code: second,
-            millisecond_code: millisecond,
-        })
     }
 }
 

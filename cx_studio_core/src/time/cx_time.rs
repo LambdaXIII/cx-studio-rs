@@ -12,6 +12,10 @@ pub struct Time {
  * 支持负数时间。
  */
 impl Time {
+    pub fn zero() -> Self {
+        Self::from_milliseconds(0)
+    }
+
     pub fn from_milliseconds(milliseconds: i64) -> Self {
         Self {
             millisecond: milliseconds,

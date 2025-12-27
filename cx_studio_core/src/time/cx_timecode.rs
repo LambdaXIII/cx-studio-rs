@@ -56,7 +56,7 @@ impl Timecode {
     }
 
     const PATTERN: &'static str = r"^(\d{2})[^\d](\d{2})[^\d](\d{2})[^\d](\d{2,})$";
-    pub fn from_str(code: &str, timebase: Timebase) -> Option<Self> {
+    pub fn from_string(code: &str, timebase: Timebase) -> Option<Self> {
         let pat = regex::Regex::new(Self::PATTERN).ok()?;
         let caps = pat.captures(code)?;
         let hour_code = caps.get(1)?.as_str().parse().ok()?;
