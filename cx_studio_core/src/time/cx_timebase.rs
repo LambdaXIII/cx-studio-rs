@@ -1,3 +1,5 @@
+use super::cx_time::Time;
+
 /**
  * 自动处理时基信息的结构体
  *
@@ -35,6 +37,15 @@ impl Timebase {
 
     pub fn milliseconds_per_frame(&self) -> u32 {
         (1000.0 / self.fps) as u32
+    }
+
+    pub fn frames_from_time(&self, time: &Time) -> i64 {
+        let seconds = time.to_seconds();
+        (seconds * self.framerate as f64) as i64
+    }
+
+    pub fn time_from_frames(&self, frames: i64) -> Time {
+        Time::from_seconds((frames as f64) / self.framerate as f64)
     }
 }
 

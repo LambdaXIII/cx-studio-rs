@@ -1,7 +1,6 @@
 use super::cx_time::Time;
 use regex::Regex;
 use std::fmt;
-use std::str::FromStr;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Timestamp {
