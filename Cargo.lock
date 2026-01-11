@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cx_studio_core"
+name = "cx_studio"
 version = "0.1.0"
 dependencies = [
  "regex",
