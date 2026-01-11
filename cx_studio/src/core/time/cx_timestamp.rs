@@ -67,6 +67,7 @@ impl Timestamp {
     /// Returns None if the string is invalid.
     ///
     /// ```rust
+    /// use cx_studio::core::Timestamp;
     /// let timestamp = Timestamp::from_string("00:00:05.020"); // Some(00:00:05.020)
     /// ```
     pub fn from_string(s: &str) -> Option<Self> {

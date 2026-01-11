@@ -11,8 +11,9 @@ Then it can be formatted to a time code string properly.
 For example:
 
 ```rust
+use cx_studio::core::{Timebase, Timecode, Time};
 let timebase = Timebase::new(24.0);
-let timecode = Timecode::from_time(Time::from_seconds(1.5), &timebase);
+let timecode = Timecode::from_time(Time::from_seconds(1.5), timebase);
 let timecode_str = timecode.to_string(); // "00:00:01:12"
 ```
 

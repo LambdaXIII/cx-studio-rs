@@ -16,6 +16,7 @@ impl Timecode {
     /// Directly constructs a Timecode object with given hour, minute, second, frame and timebase.
     ///
     /// ```rust
+    /// use cx_studio::core::{Timebase,Timecode};
     /// let timebase = Timebase::new(24.0);
     /// let timecode = Timecode::new(0, 0, 5, 2, timebase); // 00:00:05:02
     /// ```
@@ -38,6 +39,7 @@ impl Timecode {
     /// Converts a Time object to a Timecode object with given timebase.
     ///
     /// ```rust
+    /// use cx_studio::core::{Timebase,Timecode,Time};
     /// let timebase = Timebase::new(24.0);
     /// let time = Time::from_seconds(1.5555);
     /// let timecode = Timecode::from_time(time, timebase); // 00:00:01:12
@@ -67,6 +69,7 @@ impl Timecode {
     /// Returns a [Time] object.
     ///
     /// ```rust
+    /// use cx_studio::core::{Timebase,Timecode};
     /// let timebase = Timebase::new(24.0);
     /// let timecode = Timecode::new(0, 0, 5, 2, timebase); // 00:00:05:02
     /// let time = timecode.to_time(); // 1.5555
@@ -87,6 +90,7 @@ impl Timecode {
     /// Returns None if the string is invalid.
     ///
     /// ```rust
+    /// use cx_studio::core::{Timebase, Timecode};
     /// let timebase = Timebase::new(24.0);
     /// let timecode = Timecode::from_string("00:00:05:02", timebase); // Some(00:00:05:02)
     /// ```

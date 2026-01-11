@@ -18,6 +18,7 @@ for creating time object from different numerical values.
 For example:
 
 ```rust
+use cx_studio::core::Time;
 let time0 = Time::zero();
 let time1 = Time::from_seconds(1.5);
 let time2 = Time::from_minutes(2.5);
@@ -28,6 +29,7 @@ Well, Time actually stores a milliseond value,
 so larger accuracy will be ignored.
 
 ```rust
+use cx_studio::core::Time;
 let time1 = Time::from_milliseconds(1234);
 let time2 = Time::from_seconds(1.2341);
 // time1 and time2 are equal.
@@ -44,6 +46,7 @@ for extracting numerical values from time object.
 For example:
 
 ```rust
+use cx_studio::core::Time;
 let time = Time::from_seconds(1.5);
 let ms = time.to_milliseconds(); // 1500
 let hours = time.to_hours();
@@ -59,10 +62,11 @@ for performing arithmetic operations on time object.
 For example:
 
 ```rust
+use cx_studio::core::Time;
 let time1 = Time::from_seconds(1.5);
 let time2 = Time::from_minutes(2.5);
 let time3 = time1 + time2; // 9000ms
-let time4 = time3 * 2; // 18000ms
+let time4 = time3 * 2.0; // 18000ms
 ```
 
 ### Note

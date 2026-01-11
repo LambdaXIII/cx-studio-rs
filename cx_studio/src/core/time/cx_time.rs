@@ -18,6 +18,7 @@ impl Time {
     /// *Actually, Time internally stores this millisecond value.*
     ///
     /// ```rust
+    /// use cx_studio::core::Time;
     /// let time = Time::from_milliseconds(1500); // will generate a time length of 1500 milliseconds   
     /// let time2 = Time::from_milliseconds(-1500); // this is also illegal
     /// ```
@@ -32,6 +33,7 @@ impl Time {
     /// *Although you can input a floating-point number,
     /// Time class only stores millisecond accuracy.*
     /// ```rust
+    /// use cx_studio::core::Time;
     /// let time = Time::from_seconds(1.5); // represents a time object of 1500 milliseconds
     /// let time2 = Time::from_seconds(1.500001); // actually equals time
     /// ```
@@ -69,6 +71,7 @@ impl Time {
     /// *Note that the precision of Time class is only millisecond,
     /// so the converted seconds may be different from the input seconds.*
     /// ```rust
+    /// use cx_studio::core::Time;
     /// let time = Time::from_seconds(1.5555);
     /// let seconds = time.to_seconds(); // 1.556
     /// ```
@@ -94,9 +97,10 @@ impl Time {
     /// Returns a new time object.
     ///
     /// ```rust
-    /// let time = Time::from_hours(25); // stores a time with 25 hours
+    /// use cx_studio::core::Time;
+    /// let time = Time::from_hours(25.0); // stores a time with 25 hours
     /// let normalized_time = time.normalized(); // normalized as 1 hour
-    /// let one_hour = Time::from_hours(1); // normalized_time equals one_hour
+    /// let one_hour = Time::from_hours(1.0); // normalized_time equals one_hour
     /// ```
     ///
     /// - If the time is larger than one day,

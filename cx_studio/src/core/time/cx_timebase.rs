@@ -20,9 +20,10 @@ impl Timebase {
     /// and dropframe would be `true`.
     ///
     /// ```rust
-    /// let tb_24 = Timebase::new(24); // Standard 24 frame rate
+    /// use cx_studio::core::Timebase;
+    /// let tb_24 = Timebase::new(24.0); // Standard 24 frame rate
     /// let tb_23976 = Timebase::new(23.976); // Dropframe 24 frame rate
-    /// let strange_timebase = Timebase::new(789.830) // Dropframe 790 fps, strange but acceptable
+    /// let strange_timebase = Timebase::new(789.830); // Dropframe 790 fps, strange but acceptable
     /// ```
     ///
     /// Note that the frame rate would always be larger than or equal to the given fps.
