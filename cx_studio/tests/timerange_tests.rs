@@ -1,4 +1,4 @@
-use cx_studio_core::time::{Time, TimeRange};
+use cx_studio::core::{Time, TimeRange};
 
 /// 测试创建有序的TimeRange对象
 #[test]

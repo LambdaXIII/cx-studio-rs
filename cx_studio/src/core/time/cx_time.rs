@@ -12,28 +12,33 @@ pub struct Time {
  * 支持负数时间。
  */
 impl Time {
+    /// 直接生成一个0时间。
     pub fn zero() -> Self {
         Self::from_milliseconds(0)
     }
 
+    /// 从毫秒数创建时间对象，此毫秒数本身为 Time 内部的保存形式。
     pub fn from_milliseconds(milliseconds: i64) -> Self {
         Self {
             millisecond: milliseconds,
         }
     }
 
+    /// 从秒数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
     pub fn from_seconds(seconds: f64) -> Self {
         Self {
             millisecond: (seconds * 1000.0).round() as i64,
         }
     }
 
+    /// 从分钟数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
     pub fn from_minutes(minutes: f64) -> Self {
         Self {
             millisecond: (minutes * 60.0 * 1000.0).round() as i64,
         }
     }
 
+    /// 从小时数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
     pub fn from_hours(hours: f64) -> Self {
         Self {
             millisecond: (hours * 60.0 * 60.0 * 1000.0).round() as i64,

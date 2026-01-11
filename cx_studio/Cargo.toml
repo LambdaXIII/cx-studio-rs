@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [lib]
-name = "cx_studio_core"
+name = "cx_studio"
 # path = "src"
 create-type = ["rlib", "dylib"]
 

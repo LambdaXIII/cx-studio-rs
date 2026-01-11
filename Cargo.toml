@@ -1,3 +1,3 @@
 [workspace]
-members = ["cx_studio_core"]
+members = ["cx_studio"]
 resolver = "3"

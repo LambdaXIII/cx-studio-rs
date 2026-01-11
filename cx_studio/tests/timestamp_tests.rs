@@ -1,4 +1,4 @@
-use cx_studio_core::time::{Time, Timestamp};
+use cx_studio::core::{Time, Timestamp};
 
 /// 测试创建Timestamp对象
 #[test]

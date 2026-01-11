@@ -1,4 +1,4 @@
-use cx_studio_core::time::{Time, Timebase};
+use cx_studio::core::{Time, Timebase};
 
 /// 测试创建整数帧率的Timebase对象
 #[test]

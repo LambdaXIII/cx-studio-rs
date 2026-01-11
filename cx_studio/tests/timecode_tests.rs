@@ -1,4 +1,4 @@
-use cx_studio_core::time::{Time, Timebase, Timecode};
+use cx_studio::core::{Time, Timebase, Timecode};
 
 /// 测试创建Timecode对象
 #[test]

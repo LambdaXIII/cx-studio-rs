@@ -1,4 +1,4 @@
-use cx_studio_core::time::Time;
+use cx_studio::core::Time;
 
 /// 测试创建零值时间对象
 #[test]
