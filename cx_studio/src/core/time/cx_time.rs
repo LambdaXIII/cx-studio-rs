@@ -1,72 +1,113 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
+#[doc = include_str!("doc_Time.md")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Time {
     millisecond: i64,
 }
 
-/**
- * Time 是一个用于表示时间的结构体。既可以用于表示时间点，也可以表示一段时间。
- * 内部保存的是毫秒数字，也就是说精确到毫秒。
- *
- * 支持负数时间。
- */
 impl Time {
-    /// 直接生成一个0时间。
+    /// Directly constructs a Time object with 0 milliseconds.
+    /// [default()](Self::default) will call this method.
     pub fn zero() -> Self {
         Self::from_milliseconds(0)
     }
 
-    /// 从毫秒数创建时间对象，此毫秒数本身为 Time 内部的保存形式。
+    /// Directly constructs a Time object with given milliseconds.
+    ///
+    /// *Actually, Time internally stores this millisecond value.*
+    ///
+    /// ```rust
+    /// let time = Time::from_milliseconds(1500); // will generate a time length of 1500 milliseconds   
+    /// let time2 = Time::from_milliseconds(-1500); // this is also illegal
+    /// ```
     pub fn from_milliseconds(milliseconds: i64) -> Self {
         Self {
             millisecond: milliseconds,
         }
     }
 
-    /// 从秒数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
+    /// Directly constructs a Time object with given seconds.
+    ///
+    /// *Although you can input a floating-point number,
+    /// Time class only stores millisecond accuracy.*
+    /// ```rust
+    /// let time = Time::from_seconds(1.5); // represents a time object of 1500 milliseconds
+    /// let time2 = Time::from_seconds(1.500001); // actually equals time
+    /// ```
     pub fn from_seconds(seconds: f64) -> Self {
         Self {
             millisecond: (seconds * 1000.0).round() as i64,
         }
     }
 
-    /// 从分钟数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
+    /// Directly constructs a Time object with given minutes.
+    ///
+    /// *See also [Self::from_seconds].*
     pub fn from_minutes(minutes: f64) -> Self {
         Self {
             millisecond: (minutes * 60.0 * 1000.0).round() as i64,
         }
     }
 
-    /// 从小时数创建时间对象。虽然可以输入浮点数，但是 Time 类的保存精度只精确到毫秒。
+    /// Directly constructs a Time object with given hours.
+    ///
+    /// *See also [Self::from_seconds].*
     pub fn from_hours(hours: f64) -> Self {
         Self {
             millisecond: (hours * 60.0 * 60.0 * 1000.0).round() as i64,
         }
     }
 
+    /// Converts the time object to milliseconds.
     pub fn to_milliseconds(&self) -> i64 {
         self.millisecond
     }
 
+    /// Converts the time object to seconds.
+    ///
+    /// *Note that the precision of Time class is only millisecond,
+    /// so the converted seconds may be different from the input seconds.*
+    /// ```rust
+    /// let time = Time::from_seconds(1.5555);
+    /// let seconds = time.to_seconds(); // 1.556
+    /// ```
     pub fn to_seconds(&self) -> f64 {
         self.millisecond as f64 / 1000.0
     }
 
+    /// Converts the time object to minutes.
+    ///
+    /// *See also [Self::to_seconds].*
     pub fn to_minutes(&self) -> f64 {
         self.millisecond as f64 / 60.0 / 1000.0
     }
 
+    /// Converts the time object to hours.
+    ///
+    /// *See also [Self::to_seconds].*
     pub fn to_hours(&self) -> f64 {
         self.millisecond as f64 / 60.0 / 60.0 / 1000.0
     }
 
-    /**
-     * 将时间锁定在一天之内。
-     *
-     * 超出部分将重新计算。
-     * 负数部分则反向计算。
-     */
+    /// Normalizes the time object to a duration within one day.    
+    /// Returns a new time object.
+    ///
+    /// ```rust
+    /// let time = Time::from_hours(25); // stores a time with 25 hours
+    /// let normalized_time = time.normalized(); // normalized as 1 hour
+    /// let one_hour = Time::from_hours(1); // normalized_time equals one_hour
+    /// ```
+    ///
+    /// - If the time is larger than one day,
+    ///   the normalized time will represent the time in next day.
+    ///
+    /// - If the time is smaller than zero,
+    ///   the normalized time will represent the time in previous day.
+    ///
+    /// - If the time is still out of the range of one day,
+    ///   the normalization will continue to try.
+    ///
     pub fn normalized(&self) -> Self {
         const DAY_MILLISECONDS: i64 = 24 * 60 * 60 * 1000;
         let normalized_millisecond = self.millisecond.rem_euclid(DAY_MILLISECONDS);

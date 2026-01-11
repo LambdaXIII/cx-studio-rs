@@ -1,7 +1,7 @@
 use super::cx_time::Time;
 
 #[doc=include_str!("doc_Timebase.md")]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Timebase {
     fps: f32,
     framerate: u16,
