@@ -2,6 +2,7 @@ use std::cmp::{max, min};
 
 use super::cx_time::Time;
 
+#[doc = include_str!("doc_TimeRange.md")]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct TimeRange {
     pub start: Time,

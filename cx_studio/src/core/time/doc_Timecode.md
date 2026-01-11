@@ -35,4 +35,4 @@ Examples:
 
 ---
 
-See also: [Time], [Timebase].
+See also: [Time], [Timebase] and [Timestamp](super::Timestamp).

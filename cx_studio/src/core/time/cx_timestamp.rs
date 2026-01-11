@@ -2,6 +2,7 @@ use super::cx_time::Time;
 use regex::Regex;
 use std::fmt;
 
+#[doc = include_str!("doc_TimeStamp.md")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Timestamp {
     hour_code: u8,
@@ -21,6 +22,7 @@ impl fmt::Display for Timestamp {
 }
 
 impl Timestamp {
+    /// Creates a new timestamp.
     pub fn new(hour_code: u8, minute_code: u8, second_code: u8, millisecond_code: u16) -> Self {
         Self {
             hour_code,
@@ -30,6 +32,7 @@ impl Timestamp {
         }
     }
 
+    /// Constructs from a [Time] object.
     pub fn from_time(time: Time) -> Self {
         let ms = time.normalized().to_milliseconds();
         let mmm = ms % 1000;
@@ -47,6 +50,7 @@ impl Timestamp {
         }
     }
 
+    /// Converts to a [Time] object.
     pub fn to_time(&self) -> Time {
         Time::from_milliseconds(
             (self.hour_code as i64 * 60 * 60 * 1000)
@@ -57,6 +61,14 @@ impl Timestamp {
     }
 
     const PATTERN: &'static str = r"^(\d{2})[^\d](\d{2})[^\d](\d{2})[^\d](\d{3})$";
+
+    /// Parses a timestamp string.
+    ///
+    /// Returns None if the string is invalid.
+    ///
+    /// ```rust
+    /// let timestamp = Timestamp::from_string("00:00:05.020"); // Some(00:00:05.020)
+    /// ```
     pub fn from_string(s: &str) -> Option<Self> {
         let re = Regex::new(Self::PATTERN).ok()?;
         let caps = re.captures(s)?;
@@ -86,6 +98,7 @@ impl Into<Time> for Timestamp {
 }
 
 impl Default for Timestamp {
+    /// Default timestamp is 00:00:00.000.
     fn default() -> Self {
         Self::new(0, 0, 0, 0)
     }
